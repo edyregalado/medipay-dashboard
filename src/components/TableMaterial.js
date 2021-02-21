@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     color: 'white',
-    background: 'black',
+    background: '#808080',
     textAlign: 'center'
   },
   body: {
@@ -27,22 +27,26 @@ function TableMaterial(props) {
         <TableHead>
           <TableRow>
             <StyledTableCell>
-              Video
+              Paciente
+            </StyledTableCell>
+            <StyledTableCell>
+              Concepto
             </StyledTableCell>
             <StyledTableCell>
               Fecha de pago
             </StyledTableCell>
             <StyledTableCell>
-              Número
+              Monto
             </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.data.map(element=>(
             <TableRow key={element.id}>
-              <TableCell><img src={element.image} wdith="35px" height="25px"/>{" "}{element.video}</TableCell>
+              <TableCell align="center">{element.patient}</TableCell>
+              <TableCell align="center"><img src={element.image} wdith="35px" height="25px"/>{" "}{element.concepto}</TableCell>
               <TableCell align="center">{element.date}</TableCell>
-              <TableCell align="center">{element.number}</TableCell>
+              <TableCell align="center">${element.number}</TableCell>
             </TableRow>
           ))}
         </TableBody>
