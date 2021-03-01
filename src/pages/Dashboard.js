@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import 'fontsource-roboto';
 import RedditIcon from '@material-ui/icons/Reddit';
@@ -12,6 +12,9 @@ import TableMaterial from '../components/TableMaterial';
 import '../assets/css/Dashboard.css';
 import CardsHeader from '../components/CardsHeader';
 import Navbar from '../components/Navbar';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import useConsultas from '../hooks/useConsultas';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +39,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    alignItems: 'center'
   }
 }));
 
@@ -72,6 +77,23 @@ const data = [
 ];
 
 function Dashboard(props) {
+
+  const [ patients, setPatients ] = useState([]); //array because the answer is an array'
+  const { Consultas } = useConsultas(patients);
+
+  useEffect(() => {
+
+    // Call API
+    // console.log(setPatients);
+    const getPatients = async () => {
+      const result = await axios.get('http://localhost:1337/patients');
+      setPatients(result.data);
+      // setFiltered(result.data);
+      console.log(result.data);
+    }
+    getPatients();
+  }, [patients]); //arreglo vacío para que solo se llame una vez
+
   const classes = useStyles();
   const { user, isAuthenticated } = useAuth0();
 
@@ -92,9 +114,9 @@ function Dashboard(props) {
             <CardsHeader icon={<LocalHospitalIcon className={classes.icons}/>} title="Citas Hoy" text="3" color="rgba(93,219,250)" font="white"/>
           </Grid>
           <Grid item xs={0} sm={0} md={1} lg={1} xl={1}></Grid>
-          <Container maxWidth="lg" className={classes.container}> 
+          <Container maxWidth="sm" className={classes.container}> 
             <Paper className={classes.paper}>
-              <TableMaterial data={data}/>
+              <Consultas data={patients.data}/>
             </Paper>
           </Container>
           
@@ -121,6 +143,7 @@ function Dashboard(props) {
         </Grid>
       </div>
     )
+    // isAuthenticated! && (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
   );
 };
 
