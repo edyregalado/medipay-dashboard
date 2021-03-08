@@ -46,36 +46,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const data = [
-  {
-    id:1,
-    patient: "Fernando Huerta",
-    concepto:
-      "Anticipo",
-    date: "6 de feb. 2021",
-    number: 32,
-    imagen: require("../assets/img/Medipay.png"),
-  },
-  {
-    id:2,
-      patient: "Eduardo Regalado",
-      concepto:
-        "Anticipo",
-      date: "5 de feb. 2021",
-      number: 31,
-      imagen: require("../assets/img/Medipay.png"),
-    },
-    {
-    id:3,
-      patient: "Wendy Enriquez",
-      concepto:
-        "Anticipo",
-      date: "4 de feb. 2021",
-      number: 21,
-      imagen: require("../assets/img/Medipay.png"),
-    },
-];
-
 function Dashboard(props) {
 
   const [ patients, setPatients ] = useState([]); //array because the answer is an array'
@@ -84,15 +54,14 @@ function Dashboard(props) {
   useEffect(() => {
 
     // Call API
-    // console.log(setPatients);
     const getPatients = async () => {
       const result = await axios.get('http://localhost:1337/patients');
       setPatients(result.data);
       // setFiltered(result.data);
-      console.log(result.data);
+      // console.log(result.data);
     }
     getPatients();
-  }, [patients]); //arreglo vacío para que solo se llame una vez
+  }, []); //arreglo vacío para que solo se llame una vez
 
   const classes = useStyles();
   const { user, isAuthenticated } = useAuth0();
@@ -119,31 +88,9 @@ function Dashboard(props) {
               <Consultas data={patients.data}/>
             </Paper>
           </Container>
-          
-          {/* <Grid container spacing={1} className={classes.container} xs={12} sm={12} md={6} lg={6} xl={6}>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Cards title="Something" text="3214"/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Cards title="Something 2" text="4567"/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Cards title="Something 3" text="789"/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Cards title="Something 4" text="8768678"/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-            </Grid>
-          </Grid>
-          <Grid item xs={0} sm={0} md={1} lg={1} xl={1}></Grid>
-          <Grid container spacing={1} className={classes.container} xs={12} sm={12} md={5} lg={5} xl={5}>
-              <Graphics />
-          </Grid> */}
         </Grid>
       </div>
     )
-    // isAuthenticated! && (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
   );
 };
 

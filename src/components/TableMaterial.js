@@ -43,10 +43,10 @@ function TableMaterial(patients) {
           <TableBody>
             {patients.map(element=>(
               <TableRow key={element.id}>
-                <TableCell align="center">{`${element.Patient_Name}`}</TableCell>
-                <TableCell align="center"><img src={element.image} wdith="35px" height="25px"/>{" "}{element.concepto}</TableCell>
+                <TableCell align="center">{`${element.patient_name}`}</TableCell>
                 <TableCell align="center">{`${element.email}`}</TableCell>
                 <TableCell align="center">{`${element.created_at}`}</TableCell>
+                <TableCell align="center">{`${element.amount}`}</TableCell>
               </TableRow>
             ))}
           </TableBody>
